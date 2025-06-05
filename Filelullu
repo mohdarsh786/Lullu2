@@ -1,0 +1,35 @@
+import java.io.*;
+import java.util.Scanner;
+
+public class ReverseWordInFile {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String filename = "reverse.txt";
+
+        System.out.print("Enter a sentence: ");
+        String inputSentence = scanner.nextLine();
+
+        try (FileWriter writer = new FileWriter(filename)) {
+            writer.write(inputSentence);
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());
+            return;
+        }
+
+        String readSentence = "";
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            readSentence = reader.readLine();
+        } catch (IOException e) {
+            System.out.println("Error reading from file: " + e.getMessage());
+            return;
+        }
+
+        String[] words = readSentence.split(" ");
+
+        System.out.println("Sentence with each word reversed:");
+        for (String word : words) {
+            StringBuffer reversedWord = new StringBuffer(word);
+            System.out.print(reversedWord.reverse() + " ");
+        }
+    }
+}
